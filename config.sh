@@ -9,3 +9,5 @@ comparaison_ref="file://$PWD/realignement/ALIN-ekaw-sigkdd.rdf"
 listofStatMesures="fMeasure
 recall
 precision"
+
+tresholds=`LANG=en_US seq 0 0.05 1`

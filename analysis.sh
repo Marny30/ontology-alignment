@@ -10,7 +10,7 @@ analysis () {
     mkdir realignement/realignement
     mkdir realignement/analysis
     for mesure in $listofMesures; do
-        for treshold in `LANG=en_US seq 0 0.1 1`; do
+        for treshold in $tresholds; do
             outputpath="$PWD/realignement/realignement/realign-"$mesure"-"$treshold".owl"
             pathanalysis="$PWD/realignement/analysis/analysis-"$mesure"-"$treshold".owl"
 

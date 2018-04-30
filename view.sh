@@ -2,7 +2,7 @@
 
 
 source $PWD/config.sh
-
+output_prefix="./graphiques/"
 ###############################################################################
 #                         Génération des fichiers .dat                        #
 ###############################################################################
@@ -16,12 +16,12 @@ build_dat_files(){
             csv_string=$csv_string"\t"$measure
         done
         csv_string=$csv_string"\n"
-        output_file=$sm".csv"
+        output_file=$output_prefix$sm".dat"
         # for treshold in `LANG=en_US seq 0 0.1 1`; do
         #     csv_string=$csv_string$treshold", ";
         # done
         # csv_string=$csv_string"\n"
-        for treshold in `LANG=en_US seq 0 0.1 1`; do
+        for treshold in $tresholds; do
             # csv_string=$csv_string$mesure"\t"
             csv_string=$csv_string$treshold
             for mesure in $listofMesures; do
@@ -43,12 +43,14 @@ build_dat_files(){
 #                             Génération de graphe                            #
 ###############################################################################
 buildgraph(){
-    
-    statmesure=$1.csv
-    output="./graphiques/$1.png"
+    oldpwd=$PWD
+    cd $output_prefix
+    statmesure=$1.dat
+    output="$1.png"
     config="
 set title '$1 en fonction de la mesure et du seuil'
 set xlabel 'Seuil'
+set ylabel 'Mesure de distance'
 
 set key bottom right
 
@@ -64,6 +66,7 @@ set grid back ls 12
 # color definitions
 set style line 1 lc rgb '#8b1a0e' pt 1 ps 1 lt 1 lw 2 # --- red
 set style line 2 lc rgb '#5e9c36' pt 6 ps 1 lt 1 lw 2 # --- green
+set style line 3 lc rgb '#1a369c' pt 2 ps 1 lt 1 lw 2 # --- blue
 
 # Remove border around chart
 #unset border
@@ -72,10 +75,11 @@ plot '$statmesure' using 1:2 title 'levenshteinDistance' with lp ls 1,\
 '$statmesure' using 1:3 title 'smoaDistance' with lp ls 2,\
 '$statmesure' using 1:4 title 'equalDistance' with lp ls 3
 "
-    gnuplot 2>/dev/null <<EOF
+    gnuplot  <<EOF
 $config
 EOF
     echo "graph done for $statmesure in $output"
+    cd $oldpwd
 }
 
 build_dat_files
