@@ -20,7 +20,7 @@ analysis () {
             
             # command_stats="java -cp lib/procalign.jar fr.inrialpes.exmo.align.cli.EvalAlign -i fr.inrialpes.exmo.align.impl.eval.PRecEvaluator file://"$outputpath" "$comparaison_ref
             # Analyse
-            command_stats="java -cp lib/procalign.jar fr.inrialpes.exmo.align.cli.EvalAlign -i fr.inrialpes.exmo.align.impl.eval.PRecEvaluator "$comparaison_ref" file://"$outputpath
+            command_stats="java -cp align-4.8/lib/procalign.jar fr.inrialpes.exmo.align.cli.EvalAlign -i fr.inrialpes.exmo.align.impl.eval.PRecEvaluator "$comparaison_ref" file://"$outputpath
             echo $mesure" : "$treshold" ..."
             # echo $command_stats
             $command 1>$outputpath 2>/dev/null
